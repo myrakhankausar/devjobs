@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevJobs</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    background:#f4f6f8;
+}
+
+.header{
+    background:linear-gradient(90deg,#5f6dfc,#6e7cff);
+    padding:40px 0 80px;
+    color:white;
+    position:relative;
+}
+
+.container{
+    width:1100px;
+    margin:auto;
+    margin-top: 100px;
+}
+
+.header-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:40px;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:600;
+}
+
+.search-bar{
+    background:white;
+    padding:15px;
+    border-radius:10px;
+    display:flex;
+    gap:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+.search-bar input{
+    border:none;
+    outline:none;
+    padding:10px;
+    width:250px;
+}
+
+.search-bar button{
+    background:#5964e0;
+    color:white;
+    border:none;
+    padding:10px 20px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.jobs{
+    margin-top:-60px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+}
+
+.card{
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.05);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.time{
+    color:gray;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.title{
+    font-weight:600;
+    margin-bottom:8px;
+}
+
+.company{
+    color:gray;
+    font-size:14px;
+    margin-bottom:20px;
+}
+
+.location{
+    color:#5964e0;
+    font-size:14px;
+    font-weight:600;
+}
+
+.load-more{
+    text-align:center;
+    margin:50px 0;
+}
+
+.load-more button{
+    background:#5964e0;
+    color:white;
+    border:none;
+    padding:12px 30px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+@media(max-width:900px){
+    .container{
+        width:90%;
+    }
+    .jobs{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <div class="container">
+        <div class="header-top">
+            <div class="logo">devjobs</div>
+        </div>
+        <div class="search-bar">
+            <input class="input" type="text" placeholder="Filter by title...">
+            <button class="btn">Search</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="jobs">
+
+        <div class="card">
+            <div class="time">5h ago • Full Time</div>
+            <div class="title">Senior Software Engineer</div>
+            <div class="company">Scoot</div>
+            <div class="location">United Kingdom</div>
+        </div>
+
+        <div class="card">
+            <div class="time">20h ago • Part Time</div>
+            <div class="title">Haskell and PureScript Dev</div>
+            <div class="company">Blogr</div>
+            <div class="location">United States</div>
+        </div>
+
+        <div class="card">
+            <div class="time">1d ago • Part Time</div>
+            <div class="title">Midlevel Back End Engineer</div>
+            <div class="company">Vector</div>
+            <div class="location">Russia</div>
+        </div>
+
+        <div class="card">
+            <div class="time">2d ago • Full Time</div>
+            <div class="title">Senior Application Engineer</div>
+            <div class="company">Office Lite</div>
+            <div class="location">Japan</div>
+        </div>
+
+        <div class="card">
+            <div class="time">2d ago • Part Time</div>
+            <div class="title">Remote DevOps Engineer</div>
+            <div class="company">Pod</div>
+            <div class="location">Thailand</div>
+        </div>
+
+        <div class="card">
+            <div class="time">4d ago • Part Time</div>
+            <div class="title">Desktop Support Manager</div>
+            <div class="company">Creative</div>
+            <div class="location">Germany</div>
+        </div>
+        
+    </div>
+
+    <div class="load-more">
+        <button>Load More</button>
+    </div>
+</div>
+
+</body>
+<script>
+    const URL = "./data.json"
+    const btn = document.querySelector(".btn");
+    const input = document.querySelector(".input");
+    const container = document.querySelector(".jobs");
+
+    async function add(){
+        const promise = await fetch(URL);
+        const data = await promise.json();
+        console.log(data);
+
+        container.innerHTML=`
+        <div class="card">
+            <div class="time">${data[0].postedAt} • Part Time</div>
+            <div class="title">${data[0].position}</div>
+            <div class="company">${data[0].contract}</div>
+            <div class="location">${data[0].location}</div>
+        </div>
+        `;
+    }
+    btn.addEventListener("click", add);
+</script>
+</html>
